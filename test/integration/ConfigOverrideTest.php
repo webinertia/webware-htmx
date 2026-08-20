@@ -41,7 +41,7 @@ final class ConfigOverrideTest extends TestCase
             ConfigProvider::class,
             static fn(): array => [
                 'templates' => [
-                    'map' => [
+                    'map'            => [
                         'body::default'   => $userBody,
                         'layout::default' => $layoutFile,
                     ],
@@ -50,7 +50,8 @@ final class ConfigOverrideTest extends TestCase
             ],
         ])->getMergedConfig();
 
-        $map = ['page::home' => self::TEMPLATES . '/page/home.phtml']
+        $map =
+            ['page::home' => self::TEMPLATES . '/page/home.phtml']
             + $merged['templates']['map'];
 
         $helpers = new HelperPluginManager(new ServiceManager(), [
@@ -60,8 +61,8 @@ final class ConfigOverrideTest extends TestCase
 
         $container = new ServiceManager([
             'services' => [
-                'config'                        => $merged,
-                RendererInterface::class        => $php,
+                'config'                            => $merged,
+                RendererInterface::class            => $php,
                 HelperPluginManagerInterface::class => $helpers,
             ],
         ]);

@@ -65,13 +65,16 @@ final class LaminasRendererFactory
          * templates.default_layout
          * view_manager.default_layout
          */
-        $layouts = array_filter([
-            $config['templates']['layout']            ?? null,
-            $config['templates']['body']              ?? null,
-            $config['templates']['default_layout']    ?? null,
-            $config['templates']['default_body']      ?? null,
-            $config['view_manager']['default_layout'] ?? null,
-        ], static fn(mixed $value): bool => is_string($value) && '' !== $value);
+        $layouts = array_filter(
+            [
+                $config['templates']['layout'] ?? null,
+                $config['templates']['body'] ?? null,
+                $config['templates']['default_layout'] ?? null,
+                $config['templates']['default_body'] ?? null,
+                $config['view_manager']['default_layout'] ?? null,
+            ],
+            static fn(mixed $value): bool => is_string($value) && '' !== $value,
+        );
 
         $layout = reset($layouts);
         $layout = false === $layout ? null : $layout;
