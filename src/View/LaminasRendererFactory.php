@@ -23,6 +23,7 @@ use Psr\Container\NotFoundExceptionInterface;
 
 use function array_filter;
 use function assert;
+use function end;
 use function is_iterable;
 use function is_string;
 use function iterator_to_array;
@@ -56,41 +57,27 @@ final class LaminasRendererFactory
         $config = is_iterable($config) ? iterator_to_array($config) : [];
 
         /**
-         * Fetch the default layout and body template names from configuration.
+         * Fetch the default layout from configuration
          *
-         * Layout candidates, in precedence order:
+         * Several locations have evolved for fetching the default layout template name:
          *
          * templates.layout
          * templates.default_layout
          * view_manager.default_layout
-         *
-         * Body candidates, in precedence order:
-         *
-         * templates.body
-         * templates.default_body
          */
-        $layoutValues = array_filter(
-            [
-                $config['templates']['layout'] ?? null,
-                $config['templates']['default_layout'] ?? null,
-                $config['view_manager']['default_layout'] ?? null,
-            ],
-            static fn(mixed $value): bool => is_string($value) && '' !== $value,
-        );
+        $layouts = array_filter([
+            $config['templates']['layout']            ?? null,
+            $config['templates']['body']              ?? null,
+            $config['templates']['default_layout']    ?? null,
+            $config['templates']['default_body']      ?? null,
+            $config['view_manager']['default_layout'] ?? null,
+        ], static fn(mixed $value): bool => is_string($value) && '' !== $value);
 
-        $layout = reset($layoutValues);
+        $layout = reset($layouts);
         $layout = false === $layout ? null : $layout;
         assert(is_string($layout) || null === $layout, description: 'Layout must be a string or null.');
 
-        $bodyValues = array_filter(
-            [
-                $config['templates']['body'] ?? null,
-                $config['templates']['default_body'] ?? null,
-            ],
-            static fn(mixed $value): bool => is_string($value) && '' !== $value,
-        );
-
-        $body = reset($bodyValues);
+        $body = end($layouts);
         $body = false === $body ? null : $body;
         assert(is_string($body) || null === $body, description: 'Body must be a string or null.');
 

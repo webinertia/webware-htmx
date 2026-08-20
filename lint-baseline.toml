@@ -20,6 +20,6 @@ count = 1
 
 [[issues]]
 file = "src/View/LaminasRenderer.php"
-code = "halstead"
-message = "Method has a high halstead difficulty"
-count = 1
+code = "prefer-array-spread"
+message = "Use the array spread operator instead of `array_merge()`."
+count = 2

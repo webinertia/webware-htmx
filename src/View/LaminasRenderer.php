@@ -29,6 +29,7 @@ use Override;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
+use function array_merge;
 use function is_string;
 use function sprintf;
 
@@ -49,7 +50,7 @@ final class LaminasRenderer implements TemplateRendererInterface
 
     private ?ModelInterface $layout;
 
-    private ModelInterface|false|null $body;
+    private ?ModelInterface $body;
 
     /**
      * @throws ExceptionInterface When $layout or $body is an empty string.
@@ -146,7 +147,7 @@ final class LaminasRenderer implements TemplateRendererInterface
             captureTo: 'content',
         );
 
-        $renderedBody = $this->renderRecursively($body);
+        $renderedBody = $this->renderRecursively($body) ?? '';
 
         $layout = $this->prepareLayout($body);
 
@@ -200,7 +201,7 @@ final class LaminasRenderer implements TemplateRendererInterface
      * the body layer is skipped and the page template is rendered directly.
      * This mirrors the behaviour of prepareLayout() for the layout layer.
      */
-    private function prepareBody(ModelInterface $viewModel): ModelInterface|false|null
+    private function prepareBody(ModelInterface $viewModel): ModelInterface|false
     {
         /** @psalm-var mixed $providedBody */
         $providedBody = $viewModel->getVariable('body', null);
@@ -263,20 +264,17 @@ final class LaminasRenderer implements TemplateRendererInterface
         }
 
         if ($providedLayout instanceof ModelInterface && $providedLayout->getTemplate() !== '') {
-            return new ViewModel(
-                [
-                    ...$providedLayout->getVariables(),
-                    ...$variables,
-                ],
-                $providedLayout->getTemplate(),
-            );
+            return new ViewModel(array_merge(
+                $providedLayout->getVariables(),
+                $variables,
+            ), $providedLayout->getTemplate());
         }
 
         if ($this->layout instanceof ModelInterface) {
-            return new ViewModel([
-                ...$this->layout->getVariables(),
-                ...$variables,
-            ], $this->layout->getTemplate());
+            return new ViewModel(array_merge(
+                $this->layout->getVariables(),
+                $variables,
+            ), $this->layout->getTemplate());
         }
 
         return false;

@@ -38,20 +38,20 @@ count = 2
 
 [[issues]]
 file = "src/View/LaminasRenderer.php"
-code = "possible-method-access-on-null"
-message = "Attempting to call a method on `null`."
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Webware\Htmx\View\LaminasRenderer::prepareBody`: expected `Laminas\View\Model\ModelInterface|false`, but found `Laminas\View\Model\ModelInterface|null`.'
 count = 1
 
 [[issues]]
 file = "src/View/LaminasRenderer.php"
-code = "possibly-null-argument"
-message = 'Argument #1 of method `Webware\Htmx\View\LaminasRenderer::prepareLayout` is possibly `null`, but parameter type `Laminas\View\Model\ModelInterface` does not accept it.'
+code = "nullable-return-statement"
+message = 'Function `Webware\Htmx\View\LaminasRenderer::prepareBody` is declared to return `Laminas\View\Model\ModelInterface|false` but possibly returns a nullable value (inferred as `Laminas\View\Model\ModelInterface|null`).'
 count = 1
 
 [[issues]]
 file = "src/View/LaminasRenderer.php"
-code = "possibly-null-argument"
-message = 'Argument #1 of method `Webware\Htmx\View\LaminasRenderer::renderRecursively` is possibly `null`, but parameter type `Laminas\View\Model\ModelInterface` does not accept it.'
+code = "redundant-null-coalesce"
+message = "Redundant null coalesce: left-hand side can never be `null` or undefined."
 count = 1
 
 [[issues]]

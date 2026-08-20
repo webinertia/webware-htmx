@@ -42,14 +42,23 @@ final class ConfigOverrideTest extends TestCase
     #[Test]
     public function userlandConfigOverridesTheDefaultBodyTemplate(): void
     {
-        $userBody = "{$this->templatesDir}/user/body.phtml";
+        $userBody   = "{$this->templatesDir}/user/body.phtml";
+        $layoutFile = "{$this->templatesDir}/layout/layout.phtml";
 
         // Standard Mezzio configuration: userland ConfigProvider/config file
         // registered AFTER the package ConfigProvider replaces the map entry.
+        // The application also supplies a layout (as Mezzio always does): the
+        // action template renders into the body, which renders into the layout.
         $merged = new ConfigAggregator([
             ConfigProvider::class,
             static fn(): array => [
-                'templates' => ['map' => ['body::default' => $userBody]],
+                'templates' => [
+                    'map' => [
+                        'body::default'  => $userBody,
+                        'layout::layout' => $layoutFile,
+                    ],
+                    'default_layout' => 'layout::layout',
+                ],
             ],
         ])->getMergedConfig();
 
@@ -73,7 +82,7 @@ final class ConfigOverrideTest extends TestCase
         $renderer = (new LaminasRendererFactory())($container);
 
         self::assertSame(
-            '<section class="userland-body">Hello World</section>',
+            '<html><section class="userland-body">Hello World</section></html>',
             $renderer->render('page::home', ['name' => 'World']),
         );
     }
@@ -84,6 +93,7 @@ final class ConfigOverrideTest extends TestCase
 
         $this->writeTemplate('page/home.phtml', 'Hello <?= $this->name ?>');
         $this->writeTemplate('user/body.phtml', '<section class="userland-body"><?= $this->content ?></section>');
+        $this->writeTemplate('layout/layout.phtml', '<html><?= $this->body ?></html>');
     }
 
     protected function tearDown(): void
