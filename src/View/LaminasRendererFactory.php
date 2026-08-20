@@ -1,0 +1,104 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * This file is part of the Webware Htmx package.
+ *
+ * Copyright (c) 2026 Joey Smith <jsmith@webinertia.net>
+ * and contributors.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Webware\Htmx\View;
+
+use Laminas\View\HelperPluginManagerInterface;
+use Laminas\View\Renderer\RendererInterface;
+use Mezzio\Template\Exception\ExceptionInterface;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
+
+use function array_filter;
+use function assert;
+use function is_iterable;
+use function is_string;
+use function iterator_to_array;
+use function reset;
+
+/**
+ * Create and return a LaminasView template instance.
+ *
+ * This factory works on the basis that laminas-view is correctly configured, and we can retrieve
+ * Laminas\View\View from the container along with our own namespaced path stack resolver.
+ *
+ * A configuration array is expected with the key `config`, the structure of which is
+ * documented in {@link ConfigProvider}.
+ *
+ * @internal
+ *
+ * @psalm-internal Mezzio\LaminasView
+ * @psalm-internal MezzioTest\LaminasView
+ */
+final class LaminasRendererFactory
+{
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     * @throws ExceptionInterface
+     */
+    public function __invoke(ContainerInterface $container): LaminasRenderer
+    {
+        /** @psalm-var mixed $config */
+        $config = $container->has('config') ? $container->get('config') : [];
+        $config = is_iterable($config) ? iterator_to_array($config) : [];
+
+        /**
+         * Fetch the default layout and body template names from configuration.
+         *
+         * Layout candidates, in precedence order:
+         *
+         * templates.layout
+         * templates.default_layout
+         * view_manager.default_layout
+         *
+         * Body candidates, in precedence order:
+         *
+         * templates.body
+         * templates.default_body
+         */
+        $layoutValues = array_filter(
+            [
+                $config['templates']['layout'] ?? null,
+                $config['templates']['default_layout'] ?? null,
+                $config['view_manager']['default_layout'] ?? null,
+            ],
+            static fn(mixed $value): bool => is_string($value) && '' !== $value,
+        );
+
+        $layout = reset($layoutValues);
+        $layout = false === $layout ? null : $layout;
+        assert(is_string($layout) || null === $layout, description: 'Layout must be a string or null.');
+
+        $bodyValues = array_filter(
+            [
+                $config['templates']['body'] ?? null,
+                $config['templates']['default_body'] ?? null,
+            ],
+            static fn(mixed $value): bool => is_string($value) && '' !== $value,
+        );
+
+        $body = reset($bodyValues);
+        $body = false === $body ? null : $body;
+        assert(is_string($body) || null === $body, description: 'Body must be a string or null.');
+
+        return new LaminasRenderer(
+            $container->get(RendererInterface::class),
+            $container->get(HelperPluginManagerInterface::class),
+            $layout,
+            $body,
+        );
+    }
+}

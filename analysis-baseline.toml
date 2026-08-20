@@ -1,0 +1,61 @@
+variant = "loose"
+
+[[issues]]
+file = "src/EnumTrait.php"
+code = "less-specific-nested-argument-type"
+message = "Argument type mismatch for argument #1 of `array_combine`: expected `array<array-key, ('K.array_combine() extends array-key)>`, but provided type `array<array-key, mixed>` is less specific."
+count = 1
+
+[[issues]]
+file = "src/EnumTrait.php"
+code = "less-specific-nested-argument-type"
+message = "Argument type mismatch for argument #1 of `array_map`: expected `(callable(mixed): mixed)|(callable(mixed, ('S.array_map() extends mixed)): mixed)|null`, but provided type `(callable(...mixed): mixed)|string` is less specific."
+count = 1
+
+[[issues]]
+file = "src/EnumTrait.php"
+code = "less-specific-return-statement"
+message = 'Returned type `(webware\htmx\enumtrait&BackedEnum&backedenum&backedenum&static)|BackedEnum` is less specific than the declared return type `(webware\htmx\enumtrait&backedenum&static)|null` for function `Webware\Htmx\EnumTrait::tryFromName`.'
+count = 1
+
+[[issues]]
+file = "src/EnumTrait.php"
+code = "less-specific-return-statement"
+message = 'Returned type `array<array-key, mixed>` is less specific than the declared return type `array<string, string>` for function `Webware\Htmx\EnumTrait::toArray`.'
+count = 2
+
+[[issues]]
+file = "src/EnumTrait.php"
+code = "template-constraint-violation"
+message = "Argument type mismatch for template `K`."
+count = 1
+
+[[issues]]
+file = "src/Request/ServerRequestFilter.php"
+code = "possibly-undefined-int-array-index"
+message = "Possibly undefined array key `int(0)` accessed on `array<array-key, string>`."
+count = 2
+
+[[issues]]
+file = "src/View/LaminasRenderer.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 1
+
+[[issues]]
+file = "src/View/LaminasRenderer.php"
+code = "possibly-null-argument"
+message = 'Argument #1 of method `Webware\Htmx\View\LaminasRenderer::prepareLayout` is possibly `null`, but parameter type `Laminas\View\Model\ModelInterface` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/View/LaminasRenderer.php"
+code = "possibly-null-argument"
+message = 'Argument #1 of method `Webware\Htmx\View\LaminasRenderer::renderRecursively` is possibly `null`, but parameter type `Laminas\View\Model\ModelInterface` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/View/LaminasRendererFactory.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 4
