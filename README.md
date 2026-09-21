@@ -5,7 +5,7 @@ Provides HTMX support via laminas-view to webware applications: AJAX request det
 [![PHP Version](https://img.shields.io/packagist/php-v/webware/webware-htmx)](https://packagist.org/packages/webware/webware-htmx)
 [![Latest Version](https://img.shields.io/packagist/v/webware/webware-htmx)](https://packagist.org/packages/webware/webware-htmx)
 [![License](https://img.shields.io/github/license/webinertia/webware-htmx)](LICENSE)
-[![Continuous Integration](https://github.com/webinertia/webware-htmx/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/webinertia/webware-htmx/actions/workflows/continuous-integration.yml)
+[![Required CI](https://github.com/webinertia/webware-htmx/actions/workflows/required/webinertia/.github/.github/workflows/org-required-ci.yml/badge.svg)](https://github.com/webinertia/webware-htmx/actions/workflows/required/webinertia/.github/.github/workflows/org-required-ci.yml)
 [![codecov](https://codecov.io/gh/webinertia/webware-htmx/graph/badge.svg)](https://codecov.io/gh/webinertia/webware-htmx)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fwebinertia%2Fwebware-htmx%2F0.1.x)](https://dashboard.stryker-mutator.io/reports/github.com/webinertia/webware-htmx/0.1.x)
 
