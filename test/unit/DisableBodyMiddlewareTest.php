@@ -11,7 +11,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Server\RequestHandlerInterface;
-use Webware\Htmx\Middleware\DisableBodyMiddleware;
+use Webware\Htmx\Http\Middleware\DisableBodyMiddleware;
 
 #[CoversClass(DisableBodyMiddleware::class)]
 final class DisableBodyMiddlewareTest extends TestCase

@@ -12,7 +12,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Webware\Htmx\Middleware;
+namespace Webware\Htmx\Http\Middleware;
 
 use Mezzio\Template\TemplateRendererInterface;
 use Override;
@@ -20,8 +20,9 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Webware\Htmx\Request\Header;
 
-final class DisableBodyMiddleware implements MiddlewareInterface
+final class DetectAjaxRequestMiddleware implements MiddlewareInterface
 {
     public function __construct(
         private TemplateRendererInterface $template,
@@ -30,11 +31,13 @@ final class DisableBodyMiddleware implements MiddlewareInterface
     #[Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $this->template->addDefaultParam(
-            TemplateRendererInterface::TEMPLATE_ALL,
-            'body',
-            false,
-        );
+        if ($request->getAttribute(Header::Request->value, false)) {
+            $this->template->addDefaultParam(
+                TemplateRendererInterface::TEMPLATE_ALL,
+                'layout',
+                false,
+            );
+        }
 
         return $handler->handle($request);
     }
