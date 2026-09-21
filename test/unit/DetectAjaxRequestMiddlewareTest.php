@@ -11,7 +11,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Server\RequestHandlerInterface;
-use Webware\Htmx\Middleware\DetectAjaxRequestMiddleware;
+use Webware\Htmx\Http\Middleware\DetectAjaxRequestMiddleware;
 
 #[CoversClass(DetectAjaxRequestMiddleware::class)]
 final class DetectAjaxRequestMiddlewareTest extends TestCase
