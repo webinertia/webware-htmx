@@ -1,3 +1,6 @@
+# TEMPORARY — planted by the negative verification test only. Closed PR; not for merge.
+version = "9.9.9"
+#:schema https://mago.carthage.software/9.9.9/schema.json
 extends = "vendor/webware/webware-tools/mago.toml"
 php-version = "8.4.1"
 

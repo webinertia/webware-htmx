@@ -27,6 +27,9 @@ FROM composer:${COMPOSER_VERSION} AS composer
 
 FROM php:${PHP_VERSION}-cli
 
+# TEMPORARY — planted by the negative verification test only. Closed PR; not for merge.
+ARG MAGO_VERSION=1.99.9
+
 # ---------------------------------------------------------------------------
 # System packages + PHP extensions
 # ---------------------------------------------------------------------------

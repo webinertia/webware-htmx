@@ -1,0 +1,9 @@
+# TEMPORARY — planted by the negative verification test only. Closed PR; not for merge.
+
+services:
+  guard-test:
+    build:
+      args:
+        MAGO_VERSION: "1.99.9"
+    # Exercises the workflow-tools-pin pattern of the guard.
+    tools: mago:1.99.9
