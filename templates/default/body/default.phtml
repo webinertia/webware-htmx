@@ -1,0 +1,27 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * This file is part of the Webware Htmx package.
+ *
+ * Copyright (c) 2026 Joey Smith <jsmith@webinertia.net>
+ * and contributors.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * The package's baseline body: it renders between the page content and the layout and carries the
+ * content layer and nothing else — no navigation, no branding, no application helper — so it renders
+ * in any application that installs this package.
+ *
+ * Chrome belongs to a theme's body. An application overrides the `body::default` address in its own
+ * theme, which is how the IMS shell lives in that application's `ims` theme rather than here.
+ */
+?>
+<main id="app">
+    <?= $this->content ?>
+</main>
+

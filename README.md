@@ -27,8 +27,24 @@ Webware\Htmx\ConfigProvider::class,
 - `DisableBodyMiddleware` — disables the body layer for HTMX requests.
 - `Webware\Htmx\Response\Header` — HTMX response header helpers (`HX-Trigger`, `HX-Redirect`, …).
 - `Webware\Htmx\View\LaminasRenderer` — a laminas-view renderer with body/layout layering, registered as the default `TemplateRendererInterface`.
-- A default `body::default` template (app-overridable).
+- A baseline body template at `templates/default/body/default.phtml`, published as `body::default`.
 
-## Template override
+## Configuration
 
-The default body template ships at `body::default`. Applications override it by registering their own `templates.map['body::default']` path before the package `ConfigProvider` in the config aggregator.
+Two keys, one value each, and both values name template **addresses** rather than paths:
+
+| Key | Meaning |
+|---|---|
+| `templates.body` | the address of the body layer, e.g. `body::default` |
+| `templates.layout` | the address of the layout, e.g. `layout::default` |
+
+Neither is required: with no `templates.body` the content renders alone, and with no `templates.layout`
+nothing wraps it.
+
+The package publishes `body::default` for its own baseline template in `templates.map`. Overriding it needs
+no special placement: a map's key is the address, string keys merge **later-wins**, so a provider merged
+after this package's — an application's own `ConfigProvider`, a config file, or a theme — replaces the value
+for anyone asking for that address.
+
+With `webware/webware-theme` installed, both addresses resolve through the theme, so `body::default` can
+point at any theme's file without this package knowing themes exist.
