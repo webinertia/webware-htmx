@@ -35,7 +35,7 @@ use Mezzio\Template\TemplateRendererInterface;
 final readonly class ConfigProvider
 {
     /** @return DependenciesConfig */
-    private function getDependencies(): array
+    public function getDependencies(): array
     {
         return [
             'aliases'   => [
