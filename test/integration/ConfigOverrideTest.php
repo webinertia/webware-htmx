@@ -28,6 +28,29 @@ final class ConfigOverrideTest extends TestCase
     private const string TEMPLATES = __DIR__ . '/templates';
 
     #[Test]
+    public function theBodyAndTheLayoutAreEachNamedByOneKey(): void
+    {
+        // Only a body is named, so the content renders through it and nothing wraps it: no other key
+        // naming a layout, in templates or in view_manager, is consulted.
+        $merged = new ConfigAggregator([
+            ConfigProvider::class,
+            static fn(): array => [
+                'templates' => [
+                    'map'  => [
+                        'body::default' => self::TEMPLATES . '/userland/body.phtml',
+                    ],
+                    'body' => 'body::default',
+                ],
+            ],
+        ])->getMergedConfig();
+
+        self::assertSame(
+            '<section class="userland-body">Hello World</section>',
+            $this->renderer($merged)->render('page::home', ['name' => 'World']),
+        );
+    }
+
+    #[Test]
     public function userlandConfigOverridesTheDefaultBodyTemplate(): void
     {
         $userBody   = self::TEMPLATES . '/userland/body.phtml';
@@ -41,15 +64,27 @@ final class ConfigOverrideTest extends TestCase
             ConfigProvider::class,
             static fn(): array => [
                 'templates' => [
-                    'map'            => [
+                    'map'    => [
                         'body::default'   => $userBody,
                         'layout::default' => $layoutFile,
                     ],
-                    'default_layout' => 'layout::default',
+                    'body'   => 'body::default',
+                    'layout' => 'layout::default',
                 ],
             ],
         ])->getMergedConfig();
 
+        self::assertSame(
+            '<html><section class="userland-body">Hello World</section></html>',
+            $this->renderer($merged)->render('page::home', ['name' => 'World']),
+        );
+    }
+
+    /**
+     * @param array<string, mixed> $merged
+     */
+    private function renderer(array $merged): LaminasRenderer
+    {
         $map =
             ['page::home' => self::TEMPLATES . '/page/home.phtml']
             + $merged['templates']['map'];
@@ -67,11 +102,6 @@ final class ConfigOverrideTest extends TestCase
             ],
         ]);
 
-        $renderer = (new LaminasRendererFactory())($container);
-
-        self::assertSame(
-            '<html><section class="userland-body">Hello World</section></html>',
-            $renderer->render('page::home', ['name' => 'World']),
-        );
+        return (new LaminasRendererFactory())($container);
     }
 }

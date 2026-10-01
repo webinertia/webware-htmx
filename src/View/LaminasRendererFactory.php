@@ -21,13 +21,9 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
-use function array_filter;
-use function assert;
-use function end;
 use function is_iterable;
 use function is_string;
 use function iterator_to_array;
-use function reset;
 
 /**
  * Create and return a LaminasView template instance.
@@ -57,38 +53,19 @@ final class LaminasRendererFactory
         $config = is_iterable($config) ? iterator_to_array($config) : [];
 
         /**
-         * Fetch the default layout from configuration
-         *
-         * Several locations have evolved for fetching the default layout template name:
-         *
-         * templates.layout
-         * templates.default_layout
-         * view_manager.default_layout
+         * The body and the layout are each named by one configuration value, and each value is a
+         * template address — `body::default`, `layout::default` — so whatever resolver is registered
+         * decides which file that address points at. Neither key is required: with no body the
+         * content renders alone, and with no layout nothing wraps it.
          */
-        $layouts = array_filter(
-            [
-                $config['templates']['layout'] ?? null,
-                $config['templates']['body'] ?? null,
-                $config['templates']['default_layout'] ?? null,
-                $config['templates']['default_body'] ?? null,
-                $config['view_manager']['default_layout'] ?? null,
-            ],
-            static fn(mixed $value): bool => is_string($value) && '' !== $value,
-        );
-
-        $layout = reset($layouts);
-        $layout = false === $layout ? null : $layout;
-        assert(is_string($layout) || null === $layout, description: 'Layout must be a string or null.');
-
-        $body = end($layouts);
-        $body = false === $body ? null : $body;
-        assert(is_string($body) || null === $body, description: 'Body must be a string or null.');
+        $layout = $config['templates']['layout'] ?? null;
+        $body   = $config['templates']['body'] ?? null;
 
         return new LaminasRenderer(
             $container->get(RendererInterface::class),
             $container->get(HelperPluginManagerInterface::class),
-            $layout,
-            $body,
+            is_string($layout) && '' !== $layout ? $layout : null,
+            is_string($body) && '' !== $body ? $body : null,
         );
     }
 }

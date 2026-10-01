@@ -24,7 +24,7 @@ use Mezzio\Template\TemplateRendererInterface;
  * }
  * @type TemplatesConfig array{
  *     map: array<string, string>,
- *     default_body: string,
+ *     body: string,
  * }
  * @type ProviderConfig array{
  *     dependencies: DependenciesConfig,
@@ -54,10 +54,10 @@ final readonly class ConfigProvider
     private function getTemplates(): array
     {
         return [
-            'map'          => [
-                'body::default' => __DIR__ . '/../templates/body/default.phtml',
+            'map'  => [
+                'body::default' => __DIR__ . '/../templates/default/body/default.phtml',
             ],
-            'default_body' => 'body::default',
+            'body' => 'body::default',
         ];
     }
 
