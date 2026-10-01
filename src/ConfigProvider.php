@@ -21,6 +21,7 @@ use Mezzio\Template\TemplateRendererInterface;
  * @type DependenciesConfig array{
  *     aliases: array<string, class-string>,
  *     factories: array<class-string, class-string>,
+ *     invokables: array<class-string, class-string>,
  * }
  * @type TemplatesConfig array{
  *     map: array<string, string>,
@@ -46,6 +47,11 @@ final readonly class ConfigProvider
                 Http\Middleware\DetectAjaxRequestMiddleware::class => Http\Middleware\Container\DetectAjaxRequestMiddlewareFactory::class,
                 Http\Middleware\DisableBodyMiddleware::class       => Http\Middleware\Container\DisableBodyMiddlewareFactory::class,
                 View\LaminasRenderer::class                        => View\LaminasRendererFactory::class,
+            ],
+            // The alias above only resolves when its target is a registered service; Mezzio skips the
+            // filter otherwise, so the htmx request attributes would never be set.
+            'invokables' => [
+                Request\ServerRequestFilter::class => Request\ServerRequestFilter::class,
             ],
         ];
     }
