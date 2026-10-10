@@ -126,7 +126,7 @@ final class LaminasRenderer implements TemplateRendererInterface
         $body = $this->prepareBody($viewModel);
 
         if (false === $body) {
-            // Body layer skipped — render page directly, but still wrap in layout if present
+            // Body layer skipped - render page directly, but still wrap in layout if present
             $renderedBody = $this->renderer->render($viewModel);
 
             $layout = $this->prepareLayout($viewModel);

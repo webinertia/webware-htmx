@@ -54,7 +54,7 @@ final class LaminasRendererFactory
 
         /**
          * The body and the layout are each named by one configuration value, and each value is a
-         * template address — `body::default`, `layout::default` — so whatever resolver is registered
+         * template address - `body::default`, `layout::default` - so whatever resolver is registered
          * decides which file that address points at. Neither key is required: with no body the
          * content renders alone, and with no layout nothing wraps it.
          */
