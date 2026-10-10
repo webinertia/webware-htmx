@@ -24,7 +24,7 @@ use function array_map;
 /**
  * Utility methods for backed enums.
  *
- * Provides fromName(), names(), values(), and toArray() — the natural
+ * Provides fromName(), names(), values(), and toArray() - the natural
  * complements to the built-in from() / tryFrom() methods on backed enums.
  *
  * @api

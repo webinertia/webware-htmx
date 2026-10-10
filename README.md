@@ -23,10 +23,10 @@ Webware\Htmx\ConfigProvider::class,
 
 ## What it provides
 
-- `DetectAjaxRequestMiddleware` — detects HTMX requests and filters the incoming server request.
-- `DisableBodyMiddleware` — disables the body layer for HTMX requests.
-- `Webware\Htmx\Response\Header` — HTMX response header helpers (`HX-Trigger`, `HX-Redirect`, …).
-- `Webware\Htmx\View\LaminasRenderer` — a laminas-view renderer with body/layout layering, registered as the default `TemplateRendererInterface`.
+- `DetectAjaxRequestMiddleware` - detects HTMX requests and filters the incoming server request.
+- `DisableBodyMiddleware` - disables the body layer for HTMX requests.
+- `Webware\Htmx\Response\Header` - HTMX response header helpers (`HX-Trigger`, `HX-Redirect`, …).
+- `Webware\Htmx\View\LaminasRenderer` - a laminas-view renderer with body/layout layering, registered as the default `TemplateRendererInterface`.
 - A baseline body template at `templates/default/body/default.phtml`, published as `body::default`.
 
 ## Configuration
@@ -43,7 +43,7 @@ nothing wraps it.
 
 The package publishes `body::default` for its own baseline template in `templates.map`. Overriding it needs
 no special placement: a map's key is the address, string keys merge **later-wins**, so a provider merged
-after this package's — an application's own `ConfigProvider`, a config file, or a theme — replaces the value
+after this package's - an application's own `ConfigProvider`, a config file, or a theme - replaces the value
 for anyone asking for that address.
 
 With `webware/webware-theme` installed, both addresses resolve through the theme, so `body::default` can
