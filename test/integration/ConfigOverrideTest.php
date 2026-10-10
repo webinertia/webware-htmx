@@ -102,6 +102,6 @@ final class ConfigOverrideTest extends TestCase
             ],
         ]);
 
-        return (new LaminasRendererFactory())($container);
+        return new LaminasRendererFactory()($container);
     }
 }
