@@ -20,7 +20,8 @@ final class DisableBodyMiddlewareTest extends TestCase
     public function itAlwaysDisablesTheBodyLayer(): void
     {
         $template = $this->createMock(TemplateRendererInterface::class);
-        $template->expects(self::once())
+        $template
+            ->expects(self::once())
             ->method('addDefaultParam')
             ->with(TemplateRendererInterface::TEMPLATE_ALL, 'body', false);
 

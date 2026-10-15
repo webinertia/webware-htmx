@@ -20,7 +20,8 @@ final class DetectAjaxRequestMiddlewareTest extends TestCase
     public function itDisablesLayoutForHtmxRequests(): void
     {
         $template = $this->createMock(TemplateRendererInterface::class);
-        $template->expects(self::once())
+        $template
+            ->expects(self::once())
             ->method('addDefaultParam')
             ->with(TemplateRendererInterface::TEMPLATE_ALL, 'layout', false);
 
