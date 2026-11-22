@@ -44,9 +44,11 @@ final readonly class ConfigProvider
                 TemplateRendererInterface::class    => View\LaminasRenderer::class,
             ],
             'factories' => [
-                Http\Middleware\DetectAjaxRequestMiddleware::class => Http\Middleware\Container\DetectAjaxRequestMiddlewareFactory::class,
-                Http\Middleware\DisableBodyMiddleware::class       => Http\Middleware\Container\DisableBodyMiddlewareFactory::class,
-                View\LaminasRenderer::class                        => View\LaminasRendererFactory::class,
+                Http\Middleware\DetectAjaxRequestMiddleware::class =>
+                    Http\Middleware\Container\DetectAjaxRequestMiddlewareFactory::class,
+                Http\Middleware\DisableBodyMiddleware::class =>
+                    Http\Middleware\Container\DisableBodyMiddlewareFactory::class,
+                View\LaminasRenderer::class => View\LaminasRendererFactory::class,
             ],
             // The alias above only resolves when its target is a registered service; Mezzio skips the
             // filter otherwise, so the htmx request attributes would never be set.

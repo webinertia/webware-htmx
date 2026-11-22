@@ -2,8 +2,8 @@ variant = "loose"
 
 [[issues]]
 file = "src/EnumTrait.php"
-code = "less-specific-nested-argument-type"
-message = "Argument type mismatch for argument #1 of `array_combine`: expected `array<array-key, ('K.array_combine() extends array-key)>`, but provided type `array<array-key, mixed>` is less specific."
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Webware\Htmx\EnumTrait::toArray`: expected `array<string, string>`, but found `array<int|string, string>`.'
 count = 1
 
 [[issues]]
@@ -14,27 +14,21 @@ count = 1
 
 [[issues]]
 file = "src/EnumTrait.php"
-code = "less-specific-return-statement"
-message = 'Returned type `(webware\htmx\enumtrait&BackedEnum&backedenum&backedenum&static)|BackedEnum` is less specific than the declared return type `(webware\htmx\enumtrait&backedenum&static)|null` for function `Webware\Htmx\EnumTrait::tryFromName`.'
+code = "less-specific-nested-return-statement"
+message = '''Returned type `array<string, mixed>` is less specific than the declared return type `array<string, string>` for function `Webware\Htmx\EnumTrait::toArray` due to nested 'mixed'.'''
 count = 1
 
 [[issues]]
 file = "src/EnumTrait.php"
 code = "less-specific-return-statement"
-message = 'Returned type `array<array-key, mixed>` is less specific than the declared return type `array<string, string>` for function `Webware\Htmx\EnumTrait::toArray`.'
-count = 2
-
-[[issues]]
-file = "src/EnumTrait.php"
-code = "template-constraint-violation"
-message = "Argument type mismatch for template `K`."
+message = 'Returned type `(Webware\Htmx\EnumTrait&BackedEnum&backedenum&backedenum&static)|BackedEnum` is less specific than the declared return type `(Webware\Htmx\EnumTrait&backedenum&static)|null` for function `Webware\Htmx\EnumTrait::tryFromName`.'
 count = 1
 
 [[issues]]
 file = "src/Request/ServerRequestFilter.php"
 code = "possibly-undefined-int-array-index"
 message = "Possibly undefined array key `int(0)` accessed on `array<array-key, string>`."
-count = 2
+count = 1
 
 [[issues]]
 file = "src/View/LaminasRenderer.php"
